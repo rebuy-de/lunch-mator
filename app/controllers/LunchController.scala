@@ -9,7 +9,7 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, EssentialAction}
 import scala.concurrent.ExecutionContext.Implicits.global
-import services.{AuthenticatedController, LunchService}
+import services.LunchService
 
 class LunchController @Inject()(lunchService: LunchService, participantService: ParticipantService)(implicit db: DatabaseConfigProvider) extends AuthenticatedController {
 

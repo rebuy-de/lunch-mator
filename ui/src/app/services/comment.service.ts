@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
-import {CommentDto, NewCommentDto} from '../types';
 import {Observable} from 'rxjs';
 import 'rxjs/Rx';
+import {CommentDto, NewCommentDto} from '../types';
 
 @Injectable()
 export class CommentService {

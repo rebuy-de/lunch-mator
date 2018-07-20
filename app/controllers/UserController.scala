@@ -8,7 +8,7 @@ import play.api.libs.json._
 import play.api.mvc.{Action, EssentialAction}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import services.{AuthenticatedController, UserService}
+import services.UserService
 
 class UserController @Inject()(userService: UserService)(implicit db: DatabaseConfigProvider) extends AuthenticatedController {
 

@@ -7,7 +7,7 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, EssentialAction}
 import scala.concurrent.ExecutionContext
-import services.{AuthenticatedController, HipChatService}
+import services.HipChatService
 
 class HipChatController @Inject()(hipChatService: HipChatService)(implicit db: DatabaseConfigProvider, ec: ExecutionContext) extends AuthenticatedController {
 

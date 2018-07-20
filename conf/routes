@@ -30,6 +30,7 @@ POST        /rest/comments/:lunchId               controllers.CommentController.
 
 
 # REST User session
+GET         /rest/authenticated                   controllers.AuthenticationController.authenticated
 GET         /rest/logOut                          controllers.AuthenticationController.logOut()
 
 # REST Google signin

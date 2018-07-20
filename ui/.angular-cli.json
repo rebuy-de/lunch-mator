@@ -7,7 +7,8 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "../public/ui",
+      "deployUrl": "/assets/ui/",
       "assets": [
         "assets"
       ],
@@ -19,14 +20,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/font-awesome/css/font-awesome.min.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "styles.scss"
       ],
-      "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
-      ],
+      "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

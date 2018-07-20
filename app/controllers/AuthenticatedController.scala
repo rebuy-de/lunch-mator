@@ -1,4 +1,4 @@
-package services
+package controllers
 
 import com.google.inject.Inject
 import exceptions.AuthenticationException
@@ -7,6 +7,7 @@ import persistence.repository.Users
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
+import services.DbService
 
 class AuthenticatedController @Inject()(implicit db: DatabaseConfigProvider, ec: ExecutionContext) extends InjectedController with DbService {
 

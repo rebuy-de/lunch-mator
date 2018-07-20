@@ -8,7 +8,7 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json._
 import play.api.mvc.{Action, EssentialAction}
 import scala.concurrent.ExecutionContext
-import services.{AuthenticatedController, RestaurantService}
+import services.RestaurantService
 
 class RestaurantController @Inject()(restaurantsService: RestaurantService)(implicit ec: ExecutionContext, implicit val dbConfig: DatabaseConfigProvider) extends AuthenticatedController {
 
