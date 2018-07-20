@@ -1,14 +1,13 @@
 package persistence.repository
 
-import play.api.Logger
-
 import com.github.tototoshi.slick.PostgresJodaSupport._
 import models.{LunchRow, ParticipantRow, RestaurantRow, UserRow}
 import org.joda.time.DateTime
+import play.api.Logger
 import slick.dbio.Effect.{Read, Write}
-import slick.driver.PostgresDriver.api._
+import slick.jdbc.PostgresProfile.api._
 import slick.lifted.Tag
-import slick.profile.{FixedSqlAction, FixedSqlStreamingAction, SqlAction}
+import slick.sql.{FixedSqlAction, FixedSqlStreamingAction, SqlAction}
 
 class Participants(tag: Tag) extends Table[ParticipantRow](tag, Some("lunch_world"), "participants") {
 

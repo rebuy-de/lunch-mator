@@ -1,17 +1,14 @@
 package client
 
-import scala.concurrent.{ExecutionContext, Future}
-
-import play.Configuration
-import play.api.Logger
-import play.mvc.Http
-
 import com.google.inject.Inject
+import com.typesafe.config.Config
 import exceptions.GoogleAuthenticationException
 import models.GoogleModels.GoogleAuthorization
+import play.api.Logger
+import play.mvc.Http
+import scala.concurrent.{ExecutionContext, Future}
 
-class GoogleAuthenticationClient @Inject()(configuration: Configuration, clientWrapper: RestClientWrapper)(implicit ec: ExecutionContext)
-{
+class GoogleAuthenticationClient @Inject()(configuration: Config, clientWrapper: RestClientWrapper)(implicit ec: ExecutionContext) {
   private val googleTokenUrl = configuration.getString("google.token.url")
   private val authorizationUrl = configuration.getString("google.auth.url")
   private val lunchMatorClientId = configuration.getString("google.lunchmator.clientid")
@@ -19,8 +16,7 @@ class GoogleAuthenticationClient @Inject()(configuration: Configuration, clientW
   private val grantType = "authorization_code"
   private val clientSecret = configuration.getString("google.lunchmator.clientsecret")
 
-  def getGoogleSignInPage(origin: String): String =
-  {
+  def getGoogleSignInPage(origin: String): String = {
     val calender = "+https://www.googleapis.com/auth/calendar"
     authorizationUrl +
       "response_type=code&" +
@@ -32,8 +28,7 @@ class GoogleAuthenticationClient @Inject()(configuration: Configuration, clientW
       s"state=$origin"
   }
 
-  def getGoogleAuthorization(authorizationCode: String): Future[GoogleAuthorization] =
-  {
+  def getGoogleAuthorization(authorizationCode: String): Future[GoogleAuthorization] = {
     val headers = List(
       Http.HeaderNames.CONTENT_TYPE -> Http.MimeTypes.FORM,
       Http.HeaderNames.ACCEPT_CHARSET -> "UTF-8"

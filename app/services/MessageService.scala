@@ -1,27 +1,21 @@
 package services
 
-import scala.concurrent.ExecutionContext
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.language.postfixOps
-
-import play.api.Logger
-
 import akka.actor.{ActorRef, ActorSystem}
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import org.joda.time.{DateTime, Seconds}
+import play.api.Logger
+import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
+import scala.language.postfixOps
 
-class MessageService @Inject()(system: ActorSystem, @Named("lunch-mator-actor") actorSystem: ActorRef)(implicit ec: ExecutionContext)
-{
+class MessageService @Inject()(system: ActorSystem, @Named("lunch-mator-actor") actorSystem: ActorRef)(implicit ec: ExecutionContext) {
 
-  def publishMessage(message: Any): Unit =
-  {
+  def publishMessage(message: Any): Unit = {
     actorSystem ! message
   }
 
-  def scheduleMessage(message: Any, deliveryTime: DateTime): Unit =
-  {
+  def scheduleMessage(message: Any, deliveryTime: DateTime): Unit = {
     val now = DateTime.now()
     val delayInterval = Seconds.secondsBetween(now, deliveryTime).getSeconds
 

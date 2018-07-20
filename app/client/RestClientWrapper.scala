@@ -1,44 +1,36 @@
 package client
 
+import exceptions.HttpClientInternalException
 import javax.inject.Inject
-
+import play.api.Logger
+import play.api.libs.json.{Json, Reads}
+import play.api.libs.ws._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-import play.api.Logger
-import play.api.http.Writeable
-import play.api.libs.json.{Json, Reads}
-import play.api.libs.ws._
+class RestClientWrapper @Inject()(ws: WSClient) {
 
-import exceptions.HttpClientInternalException
-
-class RestClientWrapper @Inject()(ws: WSClient)
-{
-
-  def post[T, R](url: String, headers: List[(String, String)], postData: T)(implicit fjs: Reads[R], wrt: Writeable[T]): Future[Option[R]] =
-  {
+  def post[T, R](url: String, headers: List[(String, String)], postData: T)(implicit fjs: Reads[R], wrt: BodyWritable[T]): Future[Option[R]] = {
     Logger.debug(s"POST | url:[$url] | headers:[$headers] | body:[$postData]")
     ws
       .url(url)
-      .withHeaders(headers: _*)
+      .withHttpHeaders(headers: _*)
       .post(postData)
       .map(response => mapResponse[R](response))
   }
 
-  def get[A](url: String, headers: List[(String, String)] = List(), queryParams: List[(String, String)] = List())(implicit fjs: Reads[A]): Future[A] =
-  {
+  def get[A](url: String, headers: List[(String, String)] = List(), queryParams: List[(String, String)] = List())(implicit fjs: Reads[A]): Future[A] = {
     Logger.debug(s"GET | url:[$url] | headers:[$headers]")
     ws
       .url(url)
-      .withHeaders(headers: _*)
-      .withQueryString(queryParams: _*)
+      .withHttpHeaders(headers: _*)
+      .withQueryStringParameters(queryParams: _*)
       .get()
       .map(response => mapResponse(response))
       .map(option => option.get)
   }
 
-  private def mapResponse[A](response: WSResponse)(implicit fjs: Reads[A]): Option[A] =
-  {
+  private def mapResponse[A](response: WSResponse)(implicit fjs: Reads[A]): Option[A] = {
     if (204.equals(response.status)) {
       return Option.empty[A]
     }

@@ -1,20 +1,16 @@
 package controllers
 
-import scala.concurrent.ExecutionContext
-import scala.concurrent.ExecutionContext.Implicits.global
-
-import play.api.db.slick.DatabaseConfigProvider
-import play.api.libs.json._
-import play.api.mvc.{Action, Controller, EssentialAction}
-
 import com.google.inject.Inject
 import exceptions.RestaurantNotFoundException
 import models.CreateRestaurantDto
 import models.Formats._
-import services.{AuthenticatedService, RestaurantService}
+import play.api.db.slick.DatabaseConfigProvider
+import play.api.libs.json._
+import play.api.mvc.{Action, EssentialAction}
+import scala.concurrent.ExecutionContext
+import services.{AuthenticatedController, RestaurantService}
 
-class RestaurantController @Inject()(restaurantsService: RestaurantService)(implicit ec: ExecutionContext, implicit val dbConfig: DatabaseConfigProvider) extends AuthenticatedService with Controller
-{
+class RestaurantController @Inject()(restaurantsService: RestaurantService)(implicit ec: ExecutionContext, implicit val dbConfig: DatabaseConfigProvider) extends AuthenticatedController {
 
   def listRestaurants(): EssentialAction = async { request =>
     restaurantsService.getAllRestaurants.map(restaurants =>

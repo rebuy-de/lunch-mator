@@ -1,18 +1,15 @@
 package controllers
 
-import scala.concurrent.ExecutionContext
-
-import play.api.db.slick.DatabaseConfigProvider
-import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, Controller, EssentialAction}
-
 import com.google.inject.Inject
 import models.Formats._
 import models.{HipChatCommunication, HipChatMessageDto}
-import services.{AuthenticatedService, HipChatService}
+import play.api.db.slick.DatabaseConfigProvider
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.{Action, EssentialAction}
+import scala.concurrent.ExecutionContext
+import services.{AuthenticatedController, HipChatService}
 
-class HipChatController @Inject()(hipChatService: HipChatService)(implicit db: DatabaseConfigProvider, ec: ExecutionContext) extends AuthenticatedService with Controller
-{
+class HipChatController @Inject()(hipChatService: HipChatService)(implicit db: DatabaseConfigProvider, ec: ExecutionContext) extends AuthenticatedController {
 
   def searchUsers(name: String): EssentialAction = async(parse.tolerantText) { request =>
 

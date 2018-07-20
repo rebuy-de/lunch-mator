@@ -13,7 +13,7 @@ import org.joda.time.DateTime
 import persistence.repository.Participants
 import services._
 
-class ParticipantService @Inject()(userService: UserService, lunchService: LunchService, scheduler: MessageService)(implicit db: DatabaseConfigProvider, ec: ExecutionContext) extends Service
+class ParticipantService @Inject()(userService: UserService, lunchService: LunchService, scheduler: MessageService)(implicit db: DatabaseConfigProvider, ec: ExecutionContext) extends DbService
 {
 
   def addUserToLunch(user: UserRow, lunchId: Int): Future[Int] =

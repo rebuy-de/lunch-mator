@@ -1,19 +1,16 @@
 package controllers
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-
-import play.api.db.slick.DatabaseConfigProvider
-import play.api.libs.json._
-import play.api.mvc.{Action, Controller, EssentialAction}
-
 import com.google.inject.Inject
 import models.Formats._
 import models.UserRow
-import services.{AuthenticatedService, UserService}
+import play.api.db.slick.DatabaseConfigProvider
+import play.api.libs.json._
+import play.api.mvc.{Action, EssentialAction}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import services.{AuthenticatedController, UserService}
 
-class UserController @Inject()(userService: UserService)(implicit db: DatabaseConfigProvider) extends AuthenticatedService with Controller
-{
+class UserController @Inject()(userService: UserService)(implicit db: DatabaseConfigProvider) extends AuthenticatedController {
 
   def getAllUsers: EssentialAction = async {
     request =>

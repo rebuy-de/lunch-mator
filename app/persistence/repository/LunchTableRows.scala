@@ -1,15 +1,14 @@
 package persistence.repository
 
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import com.github.tototoshi.slick.PostgresJodaSupport._
 import models.{LunchDetail, LunchRow, RestaurantRow}
 import org.joda.time.DateTime
 import slick.dbio.DBIOAction
 import slick.dbio.Effect.{Read, Write}
-import slick.driver.PostgresDriver.api._
+import slick.jdbc.PostgresProfile.api._
 import slick.jdbc.GetResult
-import slick.profile.{FixedSqlAction, SqlAction, SqlStreamingAction}
+import slick.sql.{FixedSqlAction, SqlAction, SqlStreamingAction}
 
 class LunchTableRows(tag: Tag) extends Table[LunchRow](tag, Some("lunch_world"), "lunch_tables")
 {

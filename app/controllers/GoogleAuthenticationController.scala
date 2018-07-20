@@ -1,15 +1,13 @@
 package controllers
 
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
-
-import play.api.Logger
-import play.api.mvc.{Action, AnyContent}
-
 import com.google.inject.Inject
+import play.api.Logger
+import play.api.mvc.{Action, AnyContent, InjectedController}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import services.GoogleAuthorizationService
 
-class GoogleAuthenticationController @Inject()(googleAuthorizationService: GoogleAuthorizationService) extends AuthorizationController {
+class GoogleAuthenticationController @Inject()(googleAuthorizationService: GoogleAuthorizationService) extends InjectedController with AuthorizationController {
 
   def authorize(): Action[AnyContent] = Action.async { request =>
     val params = request.queryString.map { case (k, v) => k -> v.mkString }

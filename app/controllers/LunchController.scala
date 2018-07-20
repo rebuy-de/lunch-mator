@@ -1,19 +1,17 @@
 package controllers
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
-import play.api.db.slick.DatabaseConfigProvider
-import play.api.libs.json.{Json, JsValue}
-import play.api.mvc.{Action, Controller, EssentialAction}
-
 import com.google.inject.Inject
 import exceptions.ParticipantService
 import mappers.LunchMapper
-import models._
 import models.Formats._
-import services.{AuthenticatedService, LunchService}
+import models._
+import play.api.db.slick.DatabaseConfigProvider
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.{Action, EssentialAction}
+import scala.concurrent.ExecutionContext.Implicits.global
+import services.{AuthenticatedController, LunchService}
 
-class LunchController @Inject()(lunchService: LunchService, participantService: ParticipantService)(implicit db: DatabaseConfigProvider) extends AuthenticatedService with Controller {
+class LunchController @Inject()(lunchService: LunchService, participantService: ParticipantService)(implicit db: DatabaseConfigProvider) extends AuthenticatedController {
 
   def createLunch(): Action[JsValue] = async(parse.json) { request =>
     val lunchDto = request.body.as[CreateLunchDto]

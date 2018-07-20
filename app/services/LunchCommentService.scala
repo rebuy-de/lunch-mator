@@ -9,7 +9,7 @@ import mappers.LunchMessageMapper
 import models.{LunchComment, LunchRow, UserRow}
 import persistence.repository.{LunchComments, LunchTableRows}
 
-class LunchCommentService @Inject()(implicit ec: ExecutionContext, dbConfigProvider: DatabaseConfigProvider) extends Service {
+class LunchCommentService @Inject()(implicit ec: ExecutionContext, dbConfigProvider: DatabaseConfigProvider) extends DbService {
 
   def getCommentsForLunch(lunchId: Int): Future[Seq[LunchComment]] = usingDB {
     LunchComments.getMessagesForLunch(lunchId)

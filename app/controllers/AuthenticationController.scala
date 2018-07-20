@@ -1,13 +1,11 @@
 package controllers
 
+import com.google.inject.Inject
+import play.api.Logger
+import play.api.mvc.{Action, AnyContent, InjectedController}
 import scala.concurrent.Future
 
-import play.api.Logger
-import play.api.mvc.{Action, AnyContent, Controller}
-
-import com.google.inject.Inject
-
-class AuthenticationController @Inject() extends Controller {
+class AuthenticationController @Inject() extends InjectedController {
 
   def logOut(): Action[AnyContent] = Action.async { request =>
     Logger.info(s"Log Out:[${request.session.get("email").getOrElse("NO USER")}]")

@@ -10,9 +10,9 @@ import actors.messages.Message.NewCommentMessage
 import com.google.inject.Inject
 import models.NewComment
 import models.Formats._
-import services.{AuthenticatedService, LunchCommentService, MessageService}
+import services.{AuthenticatedController, LunchCommentService, MessageService}
 
-class CommentController @Inject()(chatMessageService: LunchCommentService, messageService: MessageService)(implicit ec: ExecutionContext, db: DatabaseConfigProvider) extends AuthenticatedService with Controller {
+class CommentController @Inject()(chatMessageService: LunchCommentService, messageService: MessageService)(implicit ec: ExecutionContext, db: DatabaseConfigProvider) extends AuthenticatedController {
 
   def getComments(lunchId: Int): EssentialAction = async { request =>
     chatMessageService.getCommentsForLunch(lunchId).map { messages =>

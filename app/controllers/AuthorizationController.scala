@@ -1,8 +1,8 @@
 package controllers
 
-import play.api.mvc.{Action, AnyContent, Controller}
+import play.api.mvc.{Action, AnyContent}
 
-trait AuthorizationController extends Controller {
+trait AuthorizationController {
 
   def authorize(): Action[AnyContent]
 }

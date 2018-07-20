@@ -1,13 +1,12 @@
 package persistence.repository
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
 import models.OAuthUserRow
+import scala.concurrent.ExecutionContext.Implicits.global
 import slick.dbio.DBIOAction
 import slick.dbio.Effect.{Read, Write}
-import slick.driver.PostgresDriver.api._
+import slick.jdbc.PostgresProfile.api._
 import slick.lifted.ProvenShape
-import slick.profile.{FixedSqlStreamingAction, SqlAction}
+import slick.sql.{FixedSqlStreamingAction, SqlAction}
 
 class OAuthUser(tag: Tag) extends Table[OAuthUserRow](tag, Some("lunch_world"), "oauth_identity") {
 

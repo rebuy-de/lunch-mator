@@ -1,14 +1,13 @@
 package persistence.repository
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
 import com.github.tototoshi.slick.PostgresJodaSupport._
 import models.UserRow
 import org.joda.time.DateTime
+import scala.concurrent.ExecutionContext.Implicits.global
 import slick.dbio.DBIOAction
 import slick.dbio.Effect.{Read, Write}
-import slick.driver.PostgresDriver.api._
-import slick.profile.{FixedSqlAction, FixedSqlStreamingAction, SqlAction}
+import slick.jdbc.PostgresProfile.api._
+import slick.sql.{FixedSqlAction, FixedSqlStreamingAction, SqlAction}
 
 class Users(tag: Tag) extends Table[UserRow](tag, Some("lunch_world"), "users") {
 
@@ -37,7 +36,7 @@ object Users {
     users.filter(_.email === email).result.headOption
   }
 
-  def isPresent(email: String): FixedSqlAction[Boolean, _root_.slick.driver.PostgresDriver.api.NoStream, Read] = {
+  def isPresent(email: String): FixedSqlAction[Boolean, NoStream, Read] = {
     users.filter(_.email === email).exists.result
   }
 

@@ -4,8 +4,8 @@ import com.github.tototoshi.slick.PostgresJodaSupport._
 import models.LunchComment
 import org.joda.time.DateTime
 import slick.dbio.Effect.{Read, Write}
-import slick.driver.PostgresDriver.api._
-import slick.profile.{FixedSqlAction, FixedSqlStreamingAction}
+import slick.jdbc.PostgresProfile.api._
+import slick.sql.{FixedSqlAction, FixedSqlStreamingAction}
 
 class LunchComments(tag: Tag) extends Table[LunchComment](tag, Some("lunch_world"), "lunch_comment") {
 

@@ -1,20 +1,18 @@
 package services
 
-import scala.collection.mutable.ListBuffer
-import scala.concurrent.{ExecutionContext, Future}
-
-import play.Configuration
-import play.api.Logger
-import play.api.db.slick.DatabaseConfigProvider
-
 import actors.messages.Message.{LunchReminderMessage, NewLunchCreatedMessage}
 import com.google.inject.Inject
+import com.typesafe.config.Config
 import mappers.LunchMapper
 import models._
 import org.joda.time.DateTime
 import persistence.repository.LunchTableRows
+import play.api.Logger
+import play.api.db.slick.DatabaseConfigProvider
+import scala.collection.mutable.ListBuffer
+import scala.concurrent.{ExecutionContext, Future}
 
-class LunchService @Inject()(scheduler: MessageService, configuration: Configuration)(implicit ec: ExecutionContext, implicit val dbConfigDataProvider: DatabaseConfigProvider) extends Service {
+class LunchService @Inject()(scheduler: MessageService, configuration: Config)(implicit ec: ExecutionContext, implicit val dbConfigDataProvider: DatabaseConfigProvider) extends DbService {
   private val lunchMatorHost = configuration.getString("lunchmator.host")
 
   def getLunchWithOpenSpotsAfter(user: UserRow): Future[Vector[(LunchRow, RestaurantRow, Int, Int)]] = usingDB {

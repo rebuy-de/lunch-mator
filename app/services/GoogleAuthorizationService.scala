@@ -15,7 +15,7 @@ import mappers.UserMapper
 import models.GoogleModels._
 import persistence.repository.OAuthUser
 
-class GoogleAuthorizationService @Inject()(googleAuthenticationClient: GoogleAuthenticationClient, userService: UserService)(implicit val df: DatabaseConfigProvider, ec: ExecutionContext) extends Service {
+class GoogleAuthorizationService @Inject()(googleAuthenticationClient: GoogleAuthenticationClient, userService: UserService)(implicit val df: DatabaseConfigProvider, ec: ExecutionContext) extends DbService {
 
   def getGoogleSignInPage(origin: String = "/welcome"): String = {
     googleAuthenticationClient.getGoogleSignInPage(origin)

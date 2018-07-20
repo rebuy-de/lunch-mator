@@ -2,8 +2,8 @@ package persistence.repository
 
 import models.RestaurantRow
 import slick.dbio.Effect.{Read, Write}
-import slick.driver.PostgresDriver.api._
-import slick.profile.{FixedSqlAction, FixedSqlStreamingAction, SqlAction}
+import slick.jdbc.PostgresProfile.api._
+import slick.sql.{FixedSqlAction, FixedSqlStreamingAction, SqlAction}
 
 class Restaurants(tag: Tag) extends Table[RestaurantRow](tag, Some("lunch_world"), "restaurants") {
 

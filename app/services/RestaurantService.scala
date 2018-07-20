@@ -10,7 +10,7 @@ import mappers.RestaurantMapper
 import models.{CreateRestaurantDto, RestaurantRow, UserRow}
 import persistence.repository.Restaurants
 
-class RestaurantService @Inject()(val userService: UserService)(implicit val dbConfigDataProvider: DatabaseConfigProvider, ec: ExecutionContext) extends Service
+class RestaurantService @Inject()(val userService: UserService)(implicit val dbConfigDataProvider: DatabaseConfigProvider, ec: ExecutionContext) extends DbService
 {
 
   def searchRestaurant(name: String): Future[Seq[RestaurantRow]] = usingDB {

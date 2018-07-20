@@ -1,15 +1,22 @@
 package models
 
 import java.sql.Timestamp
-
+import org.joda.time.format.ISODateTimeFormat
+import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-object Formats
-{
+object Formats {
+  private lazy val ISODateTimeFormatter = ISODateTimeFormat.dateTime.withZone(DateTimeZone.UTC)
+  private lazy val ISODateTimeParser = ISODateTimeFormat.dateTimeParser
 
+  implicit val dateTimeFormatter = new Format[DateTime] {
+    def reads(j: JsValue) = JsSuccess(ISODateTimeParser.parseDateTime(j.as[String]))
+
+    def writes(o: DateTime): JsValue = JsString(ISODateTimeFormatter.print(o))
+  }
   implicit val timeStampReads: Reads[Timestamp] = (__ \ "startTime").read[Long].map { long => new Timestamp(long) }
-  implicit val timeStampWrites: Writes[Timestamp] = (__ \ "startTime").write[Long].contramap { (a: Timestamp) => a.getTime }
+  implicit val timeStampWrites: Writes[Timestamp] = (__ \ "startTime").write[Long].contramap { a: Timestamp => a.getTime }
   implicit val timeStampFormat: Format[Timestamp] = Format(timeStampReads, timeStampWrites)
 
   implicit val userFormat: OFormat[UserRow] = Json.format[UserRow]

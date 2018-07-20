@@ -1,20 +1,16 @@
 package services
 
-import scala.concurrent.{ExecutionContext, Future}
-
-import play.api.db.slick.DatabaseConfigProvider
-import play.api.mvc.BodyParsers.parse
-import play.api.mvc._
-
 import com.google.inject.Inject
 import exceptions.AuthenticationException
 import models.UserRow
 import persistence.repository.Users
+import play.api.db.slick.DatabaseConfigProvider
+import play.api.mvc._
+import scala.concurrent.{ExecutionContext, Future}
 
-class AuthenticatedService @Inject()(implicit db: DatabaseConfigProvider, ec: ExecutionContext) extends Service
-{
+class AuthenticatedController @Inject()(implicit db: DatabaseConfigProvider, ec: ExecutionContext) extends InjectedController with DbService {
 
-  type ControllerBlock[A] = (AuthenticatedRequest[A]) => Future[Result]
+  type ControllerBlock[A] = AuthenticatedRequest[A] => Future[Result]
 
   def async[A](block: ControllerBlock[AnyContent]): EssentialAction = async(parse.anyContent)(block)
 
@@ -30,8 +26,7 @@ class AuthenticatedService @Inject()(implicit db: DatabaseConfigProvider, ec: Ex
       }
   }
 
-  def validateSession(request: Request[Any]): Future[Option[UserRow]] =
-  {
+  def validateSession(request: Request[Any]): Future[Option[UserRow]] = {
     if (request.session.get("email").isEmpty) {
       return Future.successful(None)
     }
