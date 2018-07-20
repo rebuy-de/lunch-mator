@@ -5,14 +5,14 @@ import com.typesafe.config.Config
 import models.Formats._
 import models.{HipChatUser, Page}
 import play.api.Logger
-import play.api.cache.CacheApi
+import play.api.cache.AsyncCacheApi
 import play.cache.NamedCache
 import play.mvc.Http
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 class HipChatUserCacheClient @Inject()(configuration: Config,
-                                       @NamedCache("hipchat-user-cache") cache: CacheApi,
+                                       @NamedCache("hipchat-user-cache") cache: AsyncCacheApi,
                                        restClientWrapper: RestClientWrapper)
                                       (implicit executionContext: ExecutionContext) {
 
@@ -21,7 +21,7 @@ class HipChatUserCacheClient @Inject()(configuration: Config,
 
   def getAllUsers: Future[Seq[HipChatUser]] = {
     val url = s"$apiBaseUrl/user?max-results=50"
-    cache.getOrElse("hipchat-users", 12.hours) {
+    cache.getOrElseUpdate("hipchat-users", 12.hours) {
       getUsers(url)
     }
   }
