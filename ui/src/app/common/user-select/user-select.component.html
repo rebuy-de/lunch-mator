@@ -1,9 +1,0 @@
-<ng-select [items]="items$ | async"
-           [multiple]="true"
-           (selected)="selected($event)"
-           (removed)="removeUser($event)"
-           (typed)="searchUsers($event)"
-           (data)="refreshValue($event)"
-           placeholder="Type user name">
-</ng-select>
-
