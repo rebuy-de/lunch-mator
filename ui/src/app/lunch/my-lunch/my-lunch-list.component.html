@@ -1,7 +1,0 @@
-<div class="container" *ngIf="lunches">
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let lunch of lunches">
-      <lunch-item (requestLeave)="requestLeave($event)" [myLunch]="true" [lunch]="lunch"></lunch-item>
-    </li>
-  </ul>
-</div>
